@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
-import { PasswordComponent } from './password/password.component';
+import { PasswordComponent } from './components/password/password.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule, 
     RouterOutlet, 
-    HeaderComponent, 
     PasswordComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PasswordStrengthComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  
 })
 export class AppComponent {
   title = 'password-check-app';
