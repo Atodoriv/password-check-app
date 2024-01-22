@@ -1,36 +1,30 @@
 import { Injectable } from "@angular/core";
 import { PasswordStrength } from "../enums/strength.enum";
 
-@Injectable(
-  {providedIn: "root"}
-  )
-
+@Injectable({
+  providedIn: "root"
+})
 export class PasswordService {
     
-  getPasswordStrength(password: string): PasswordStrength {
-    // const password = this.passwordForm.get('password')?.value || '';
-  
-  
+  getPasswordStrength(password: string): PasswordStrength {  
     if (password.length === 0) {
       return PasswordStrength.EMPTY;
     }
-  
+
     if (password.length < 8) {
       return PasswordStrength.WEAK;
     }
-  
-    if (/^[a-zA-Z]+$/.test(password) || /^[0-9]+$/.test(password) || /^[^a-zA-Z0-9]+$/.test(password)) {
+
+    const hasLetters = /[a-zA-Z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSymbols = /[^a-zA-Z\d]/.test(password);
+
+    if (hasLetters && hasNumbers && hasSymbols) {
+      return PasswordStrength.STRONG;
+    } else if (hasLetters && (hasNumbers || hasSymbols) || hasNumbers && hasSymbols) {
+      return PasswordStrength.MEDIUM;
+    } else {
       return PasswordStrength.EASY;
     }
-  
-    if (/^[a-zA-Z0-9]+$/.test(password) || /^[a-zA-Z^0-9]+$/.test(password) || /^[^a-zA-Z^0-9]+$/.test(password)) {
-      return PasswordStrength.MEDIUM;
-    }
-  
-    if (/[a-zA-Z]+/.test(password) && /[0-9]+/.test(password) && /[^a-zA-Z0-9]+/.test(password)) {
-      return PasswordStrength.STRONG;
-    }
-
-    return PasswordStrength.UNDEFINED
   }
 }
